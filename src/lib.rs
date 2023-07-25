@@ -41,7 +41,7 @@ enum Token {
     Word(String),
     Number(Value),
     NativeOperation(Operation),
-    UserDefinedOperation(String, Vec<Token>),
+    UserDefinedOperation(Vec<Token>),
 }
 
 const PREDIFINED_OPERATIONS: [(&str, Operation); 8] = [
@@ -302,7 +302,7 @@ impl Forth {
                             op @ _ => do_operation(&op)(&mut self.stack)?,
                         },
                         Token::NativeOperation(op) => do_operation(&op)(&mut self.stack)?,
-                        Token::UserDefinedOperation(_name, op_tokens) => append_front(&mut tokens, op_tokens),
+                        Token::UserDefinedOperation(op_tokens) => append_front(&mut tokens, op_tokens),
                     }
                 }
             }
