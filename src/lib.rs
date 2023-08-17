@@ -40,8 +40,8 @@ enum Command {
 enum Token {
     Word(String),
     Number(Value),
-    NativeOperation(Operation),
-    UserDefinedOperation(Vec<Token>),
+    // NativeOperation(Operation),
+    // UserDefinedOperation(Vec<Token>),
 }
 
 const PREDIFINED_OPERATIONS: [(&str, Operation); 8] = [
@@ -169,7 +169,7 @@ fn parse_command(input: &str) -> std::result::Result<Command, Error> {
             let tokens = tokens[2..tokens.len() - 1].to_vec();
             Ok(Command::Definition(str.to_owned(), tokens))
         } else {
-            return Err(Error::InvalidWord);
+            Err(Error::InvalidWord)
         }
     } else {
         Ok(Command::Expression(tokens))
@@ -274,7 +274,7 @@ impl Forth {
                         }
                     }
                 },
-                _ => (),
+                // _ => (),
             }
         }
         buf
@@ -299,10 +299,10 @@ impl Forth {
                             Operation::UserDefined(op_tokens) => {
                                 append_front(&mut tokens, op_tokens)
                             }
-                            op @ _ => do_operation(&op)(&mut self.stack)?,
+                            op => do_operation(&op)(&mut self.stack)?,
                         },
-                        Token::NativeOperation(op) => do_operation(&op)(&mut self.stack)?,
-                        Token::UserDefinedOperation(op_tokens) => append_front(&mut tokens, op_tokens),
+                        // Token::NativeOperation(op) => do_operation(&op)(&mut self.stack)?,
+                        // Token::UserDefinedOperation(op_tokens) => append_front(&mut tokens, op_tokens),
                     }
                 }
             }
