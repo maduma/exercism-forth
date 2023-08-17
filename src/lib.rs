@@ -18,7 +18,7 @@ pub enum Error {
     InvalidWord,
 }
 
-#[derive(Debug, Clone,PartialEq)]
+#[derive(Debug, Clone, PartialEq)]
 enum Operation {
     Addition,
     Subtraction,
@@ -40,8 +40,6 @@ enum Command {
 enum Token {
     Word(String),
     Number(Value),
-    // NativeOperation(Operation),
-    // UserDefinedOperation(Vec<Token>),
 }
 
 const PREDIFINED_OPERATIONS: [(&str, Operation); 8] = [
@@ -273,8 +271,7 @@ impl Forth {
                             _ => buf.push(Token::Word(input)),
                         }
                     }
-                },
-                // _ => (),
+                }
             }
         }
         buf
@@ -301,8 +298,6 @@ impl Forth {
                             }
                             op => do_operation(&op)(&mut self.stack)?,
                         },
-                        // Token::NativeOperation(op) => do_operation(&op)(&mut self.stack)?,
-                        // Token::UserDefinedOperation(op_tokens) => append_front(&mut tokens, op_tokens),
                     }
                 }
             }
